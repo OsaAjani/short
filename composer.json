@@ -1,8 +1,7 @@
 {
     "name": "descartes/default",
     "description": "Architecture de base d'un projet avec Descartes",
-    "require": {
-    },
+    "require": {},
     "license": "GNU/GPL3",
     "authors": [
         {

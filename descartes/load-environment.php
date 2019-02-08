@@ -15,7 +15,7 @@
             require_once(__DIR__ . '/../env.descartes.php');
             $environment = array_merge($environment, $env);
         }
-
+        
         //Load user defined global env
         if (file_exists(__DIR__ . '/../env.php'))
         {

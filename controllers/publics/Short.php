@@ -1,30 +1,25 @@
 <?php
-
 namespace controllers\publics;
+
 use \controllers\internals\Short as InternalShort;
-use \models\Short as ModelShort;
 
 class Short extends \Controller
 {
-
-    public function __construct(\PDO $pdo)
+    public function __construct (\PDO $pdo)
     {
         parent::__construct($pdo);
         $this->internal_short = new InternalShort($pdo);
     }
 
-	/**
-	 * Home Page
-	 */	
-	public function home ()
-	{
-		return $this->render("short/home");
+    public function home ()
+    {
+        $toto = 'Bernard';
+
+        return self::render('short/home', [
+            'prenom' => $toto,
+        ]);
     }
 
-
-    /**
-     * Page that minify an url
-     */
     public function minify ()
     {
         $url = $_POST['url'] ?? false;
@@ -40,12 +35,12 @@ class Short extends \Controller
         {
             return $this->render('short/minify', ['success' => false]);
         }
-        
+
         return $this->render('short/minify', ['success' => true, 'url' => $url, 'uid' => $uid]);
     }
 
     public function develop (string $uid)
-    {
+    {   
         $url = $this->internal_short->develop($uid);
 
         if (!$url)
@@ -56,5 +51,4 @@ class Short extends \Controller
         header('Location: ' . $url);
         return false;
     }
-
 }

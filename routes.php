@@ -1,11 +1,10 @@
 <?php
     $routes = array(
-		'Short' => [
+        'Short' => [
             'home' => '/',
-            'minify' => '/minify',
-            'develop' => '/r/{uid}',
-        ],
-
+            'minify' => '/minify/',
+            'develop' => '/r/{uid}/'
+        ]
     );
 
     define('ROUTES', $routes);

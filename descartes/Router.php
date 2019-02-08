@@ -70,7 +70,7 @@
 		protected static function clean_url (string $url)
         {
             $to_remove = parse_url(HTTP_PWD, PHP_URL_PATH);
-
+            
             $url = mb_strcut($url, mb_strlen($to_remove));
             $url = parse_url($url, PHP_URL_PATH);
 
@@ -105,7 +105,7 @@
                         {
                             continue;
                         }
-
+                        
                         return [
                             'controller' => $controller,
                             'method' => $method,
