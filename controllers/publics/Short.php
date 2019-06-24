@@ -5,24 +5,25 @@ use \controllers\internals\Short as InternalShort;
 
 class Short extends \Controller
 {
-    public function __construct (\PDO $pdo)
+
+	public function __construct()
     {
-        parent::__construct($pdo);
+        $pdo = \Model::connect(DATABASE_HOST, DATABASE_NAME, DATABASE_USER, DATABASE_PASSWORD);
         $this->internal_short = new InternalShort($pdo);
     }
 
-    public function home ()
-    {
-        $toto = 'Bernard';
+	/**
+	 * Home Page
+	 */	
+	public function home ()
+	{
+		return $this->render("short/home");
+	}
 
-        return self::render('short/home', [
-            'prenom' => $toto,
-        ]);
-    }
 
-    public function minify ()
-    {
-        $url = $_POST['url'] ?? false;
+	public function minify ()
+	{
+		$url = $_POST['url'] ?? false;
 
         if (!$url || !filter_var($url, FILTER_VALIDATE_URL))
         {
@@ -37,18 +38,19 @@ class Short extends \Controller
         }
 
         return $this->render('short/minify', ['success' => true, 'url' => $url, 'uid' => $uid]);
-    }
+	}
+
 
     public function develop (string $uid)
-    {   
+    {
         $url = $this->internal_short->develop($uid);
-
+        
         if (!$url)
         {
             return $this->render('short/develop', ['success' => false]);
         }
 
         header('Location: ' . $url);
-        return false;
+        return true;
     }
 }

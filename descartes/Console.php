@@ -38,6 +38,13 @@
 			$controller = $command[1];
             $controller = str_replace('/', '\\', $controller);
 
+            $ends_with = mb_substr($controller, -4);
+            if ($ends_with === '.php')
+            {
+                $controller = mb_substr($controller, 0, mb_strlen($controller) - 4);
+            }
+
+
 			if (!class_exists($controller))
 			{
 				return false;
@@ -221,7 +228,14 @@
                 return true;
             }
 
-			$controller = new $controller(...$args);
+            $reflection = new ReflectionClass($controller);
+            $reflection_method = $reflection->getMethod($method);
+
+            if (!$reflection_method->isStatic())
+            {
+            	$controller = new $controller(...$args);
+            }
+			
 			return call_user_func_array([$controller, $method], $params);
 		}
 
